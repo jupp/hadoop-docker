@@ -1,0 +1,21 @@
+version: '2'
+services:
+  hadoop-dfs-namenode:
+    build: ./hadoop-dfs-namenode
+    hostname: hadoop-dfs-namenode
+    ports:
+      - 8020:8020
+      - 50070:50070
+    environment:
+      HADOOP_NAMENODE_HOST: hadoop-dfs-datanode
+  hadoop-dfs-datanode:
+    build: ./hadoop-dfs-datanode
+    hostname: hadoop-dfs-datanode
+    depends_on:
+      - hadoop-dfs-namenode
+    ports:
+      - 50010:50010
+      - 50075:50075
+      - 50020:50020
+    environment:
+      HADOOP_NAMENODE_HOST: hadoop-dfs-datanode
