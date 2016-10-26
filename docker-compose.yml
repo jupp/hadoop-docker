@@ -6,8 +6,6 @@ services:
     ports:
       - 8020:8020
       - 50070:50070
-    environment:
-      HADOOP_NAMENODE_HOST: hadoop-dfs-datanode
   hadoop-dfs-datanode:
     build: ./hadoop-dfs-datanode
     hostname: hadoop-dfs-datanode
@@ -15,7 +13,22 @@ services:
       - hadoop-dfs-namenode
     ports:
       - 50010:50010
-      - 50075:50075
       - 50020:50020
-    environment:
-      HADOOP_NAMENODE_HOST: hadoop-dfs-datanode
+      - 50075:50075
+  hadoop-yarn-resourcemanager:
+    build: ./hadoop-yarn-resourcemanager
+    hostname: hadoop-yarn-resourcemanager
+    ports:
+      - 8030:8030
+      - 8031:8031
+      - 8032:8032
+      - 8033:8033
+      - 8088:8088
+      - 8090:8090
+  hadoop-yarn-nodemanager:
+    build: ./hadoop-yarn-nodemanager
+    hostname: hadoop-yarn-nodemanager
+    depends_on:
+      - hadoop-yarn-resourcemanager
+    ports:
+      - 8040:8040

@@ -22,9 +22,9 @@ RUN mkdir /app \
 RUN curl http://apache-mirror.rbc.ru/pub/apache/hadoop/common/hadoop-${HADOOP_VERSION}/hadoop-${HADOOP_VERSION}.tar.gz | tar -xz -C /app \
     && ln -s /app/hadoop-${HADOOP_VERSION} /app/hadoop
 
-ENV JAVA_HOME=/app/java \
-    HADOOP_PREFIX=/app/hadoop \
-    HADOOP_CONF_DIR=$HADOOP_PREFIX/etc/hadoop
+ENV JAVA_HOME=/app/java
+ENV HADOOP_PREFIX=/app/hadoop
+ENV HADOOP_CONF_DIR=$HADOOP_PREFIX/etc/hadoop
 
 COPY *-site.xml $HADOOP_CONF_DIR/
 
@@ -36,4 +36,5 @@ RUN adduser --disabled-password --gecos "Hadoop User" hadoop \
 USER hadoop
 
 ENV HADOOP_NAMENODE_HOST="hadoop-dfs-namenode"
-ENV HADOOP_OPTS="-Dhadoop.namenode.host=$HADOOP_NAMENODE_HOST"
+ENV YARN_RESOURCEMANAGER_HOSTNAME="hadoop-yarn-resourcemanager"
+ENV HADOOP_OPTS="-Dhadoop.namenode.host=$HADOOP_NAMENODE_HOST -Dhadoop.yarn.resourcemanager.hostname=$YARN_RESOURCEMANAGER_HOSTNAME"
