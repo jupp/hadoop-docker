@@ -36,5 +36,7 @@ RUN adduser --disabled-password --gecos "Hadoop User" hadoop \
 USER hadoop
 
 ENV HADOOP_NAMENODE_HOST="hadoop-dfs-namenode"
+ENV HADOOP_OPTS="-Dhadoop.namenode.host=$HADOOP_NAMENODE_HOST"
+
 ENV YARN_RESOURCEMANAGER_HOSTNAME="hadoop-yarn-resourcemanager"
-ENV HADOOP_OPTS="-Dhadoop.namenode.host=$HADOOP_NAMENODE_HOST -Dhadoop.yarn.resourcemanager.hostname=$YARN_RESOURCEMANAGER_HOSTNAME"
+ENV YARN_OPTS="-Dyarn.resourcemanager.hostname=$YARN_RESOURCEMANAGER_HOSTNAME"
